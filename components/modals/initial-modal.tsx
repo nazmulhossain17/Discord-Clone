@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -16,8 +17,10 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -76,10 +79,16 @@ export const InitialModal = () => {
                         {...field}
                       />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
+            <DialogFooter className="bg-gray-100 px-6 py-4">
+              <Button variant="primary" disabled={isLoading}>
+                Create
+              </Button>
+            </DialogFooter>
           </form>
         </Form>
       </DialogContent>
