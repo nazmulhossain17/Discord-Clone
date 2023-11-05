@@ -1,6 +1,6 @@
 "use client";
 
-import { useModal } from "@/hooks/use-modal-store";
+import { ServerWithMembersWithProfiles } from "@/types";
 import { MemberRole } from "@prisma/client";
 import {
   ChevronDown,
@@ -11,6 +11,7 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ServerWithMembersWithProfiles } from "@/types";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface ServerHeaderProps {
   server: ServerWithMembersWithProfiles;
