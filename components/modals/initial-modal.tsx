@@ -1,19 +1,16 @@
 "use client";
 
-import axios from "axios";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -24,7 +21,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import { FileUpload } from "@/components/file-upload";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
@@ -32,7 +31,7 @@ const formSchema = z.object({
     message: "Server name is required.",
   }),
   imageUrl: z.string().min(1, {
-    message: "Server image is required.",
+    message: "Server image is required",
   }),
 });
 
@@ -44,7 +43,6 @@ export const InitialModal = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,13 +50,10 @@ export const InitialModal = () => {
       imageUrl: "",
     },
   });
-
   const isLoading = form.formState.isSubmitting;
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.post("/api/servers", values);
-
       form.reset();
       router.refresh();
       window.location.reload();
@@ -66,11 +61,9 @@ export const InitialModal = () => {
       console.log(error);
     }
   };
-
   if (!isMounted) {
     return null;
   }
-
   return (
     <Dialog open>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
