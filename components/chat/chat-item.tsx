@@ -10,14 +10,13 @@ import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-
 import { ActionTooltip } from "@/components/action-tooltip";
-import { cn } from "@/lib/utils";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
 import { UserAvatar } from "@/components/user-avater";
+import { cn } from "@/lib/utils";
 
 interface ChatItemProps {
   id: string;
@@ -107,10 +106,16 @@ export const ChatItem = ({
   };
 
   useEffect(() => {
-    form.reset({
-      content: content,
-    });
-  }, [content]);
+    const handleKeyDown = (event: any) => {
+      if (event.key === "Escape" || event.keyCode === 27) {
+        setIsEditing(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keyDown", handleKeyDown);
+  }, [form]);
 
   const fileType = fileUrl?.split(".").pop();
 
