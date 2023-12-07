@@ -4,11 +4,25 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "supabase": "supabase"
   },
+  "builds": [
+    {
+      "src": "prisma/schema.prisma",
+      "use": "@prisma/cli"
+    },
+    {
+      "src": "next.config.js",
+      "use": "@vercel/next"
+    },
+    {
+      "src": "api/**/*.ts",
+      "use": "@vercel/node"
+    }
+  ],
   "dependencies": {
     "@clerk/nextjs": "^4.26.2",
     "@emoji-mart/data": "^1.1.2",
