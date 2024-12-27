@@ -3,16 +3,16 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Profile {
-  id String @id @default(uuid())
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   userId String @unique
   name String
-  imageUrl String @db.Text
-  email String @db.Text
+  imageUrl String 
+  email String 
 
   servers Server[]
   members Member[]
@@ -23,9 +23,9 @@ model Profile {
 }
 
 model Server {
-  id String @id @default(uuid())
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   name String
-  imageUrl String @db.Text
+  imageUrl String 
   inviteCode String @unique
 
   profileId String
@@ -47,7 +47,7 @@ enum MemberRole {
 }
 
 model Member {
-  id String @id @default(uuid())
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   role MemberRole @default(GUEST)
 
   profileId String
@@ -76,7 +76,7 @@ enum ChannelType {
 }
 
 model Channel {
-  id String @id @default(uuid())
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   name String
   type ChannelType @default(TEXT)
 
@@ -96,10 +96,10 @@ model Channel {
 }
 
 model Message {
-  id String @id @default(uuid())
-  content String @db.Text
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  content String
 
-  fileUrl String? @db.Text
+  fileUrl String? 
 
   memberId String
   member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
@@ -117,7 +117,7 @@ model Message {
 }
 
 model Conversation {
-  id String @id @default(uuid())
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
 
   memberOneId String
   memberOne Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
@@ -133,9 +133,9 @@ model Conversation {
 }
 
 model DirectMessage {
-  id String @id @default(uuid())
-  content String @db.Text
-  fileUrl String? @db.Text
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  content String 
+  fileUrl String? 
 
   memberId String
   member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
