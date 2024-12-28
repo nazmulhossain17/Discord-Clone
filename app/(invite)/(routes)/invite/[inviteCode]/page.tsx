@@ -10,7 +10,12 @@ interface InviteCodePageProps {
 }
 
 const InviteCodePage = async ({ params }: InviteCodePageProps) => {
-  const profile = await currentProfile();
+  let profile = await currentProfile();
+
+  // Ensure the profile is serializable
+  if (profile) {
+    profile = JSON.parse(JSON.stringify(profile)); // Convert to plain object
+  }
 
   if (!profile) {
     return redirectToSignIn();
@@ -53,6 +58,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   if (server) {
     return redirect(`/servers/${server.id}`);
   }
+
   return null;
 };
 
